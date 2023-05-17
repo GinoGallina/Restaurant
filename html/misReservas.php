@@ -39,11 +39,11 @@
               </li>
             </div>
             <?php
-              if($_SESSION['user_nombre']=='admin'){
-                  echo '<li class="nav-item">
+            if ($_SESSION['user_nombre'] == 'admin') {
+              echo '<li class="nav-item">
                         <a class="nav-link active" aria-current="page" href="index.html">Clientes</a>
                     </li>';
-              }
+            }
             ?>
             <li class="nav-item">
               <a class="nav-link active" aria-current="page" href="index.html">Inicio</a>
@@ -52,21 +52,25 @@
               <a class="nav-link active" aria-current="page" href="#">Carta</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="reservas.html">Reservas</a>
+              <a class="nav-link" href="reservas.php">Reservas</a>
             </li>
           </ul>
         </div>
       </div>
     </nav>
   </header>
-  <main class="container-lg main-reservas">
+
+
+
+  <main class="container-lg ">
     <section class="row">
       <div class="col-12">
-        <div class="modal fade" id="modalCrearReserva" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <!-- MODAL -->
+        <div class="modal fade" id="modalReserva" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
           <div class="modal-dialog" role="document">
             <div class="modal-content">
               <div class="modal-header text-center">
-                <h4 class="modal-title w-100 font-weight-bold">Realizar Reserva</h4>
+                <h4 id="modal-label" class="modal-title w-100 font-weight-bold"></h4>
                 <button type="button" class="border-0" data-bs-dismiss="modal" aria-label="Close">
                   X
                 </button>
@@ -75,7 +79,11 @@
 
                 <div class="md-form mb-5">
                   <label data-error="wrong" data-success="right" for="defaultForm-email">Usuario</label>
-                  <input type="text" id="nombre" name="nombre" class="form-control validate" disabled>
+                  <input type="text" id="nombre" name="nombre" class="form-control validate no-desabilitar" disabled>
+                </div>
+                <div class="md-form mb-5">
+                  <label data-error="wrong" data-success="right" for="defaultForm-email">ID</label>
+                  <input type="text" id="id_res" name="id_res" class="form-control validate no-desabilitar" disabled>
                 </div>
                 <div class="md-form mb-5">
                   <label data-error="wrong" data-success="right" for="defaultForm-email">Responsable</label>
@@ -98,24 +106,28 @@
               </div>
               <div class="modal-footer d-flex justify-content-center">
                 <button id="" class="btn btn-danger close" data-bs-dismiss="modal">Cancelar</button>
-                <button id="btn-reg-res" class="btn btn-success">Registrar</button>
+                <button id="btn-reg" class="btn btn-success">Registrar</button>
               </div>
             </div>
           </div>
         </div>
+        <!-- FIN MODAL -->
 
-        <div class="text-center ">
-          <a href="" class="btn btn-dark btn-rounded mb-4 p-4 border fs-5 btn-reserva" data-bs-toggle="modal" data-bs-target="#modalCrearReserva">Realizar una reserva</a>
-        </div>
-        <div class="text-center">
-          <a href="misReservas.php" class="btn btn-dark btn-rounded mb-4 p-4 border fs-5 btn-ver-reservas" >Ver mis reservas</a>
-        </div>
+        <table id="reservas" class="table table-dark table-striped mt-4">
+          <thead>
+            <th class="text-center">Id</th>
+            <th class="text-center">Responsable</th>
+            <th class="text-center">Personas</th>
+            <th class="text-center">Dia</th>
+            <th class="text-center">Hora</th>
+            <th class="text-center">Acciones</th>
+          </thead>
+          <tbody id="t-body">
+          </tbody>
+        </table>
       </div>
 
 
-      <div class="col-12">
-
-      </div>
     </section>
   </main>
 
@@ -126,6 +138,7 @@
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
   <script src="https://kit.fontawesome.com/75833ea205.js" crossorigin="anonymous"></script>
+  <script src="../js/reservas.js"></script>
   <script src="../js/main.js"></script>
 </body>
 

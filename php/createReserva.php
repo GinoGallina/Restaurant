@@ -45,8 +45,8 @@ if (count($row) > 0) {
 session_start();
 $id_usuario= $_SESSION['user_id'];
 
-$statement2 = $db->prepare('INSERT INTO reservas(id_usuario,personas,dia,hora) VALUES(:id_usuario,:personas,:dia,:hora)');
-$statement2->execute(array(':id_usuario' => $id_usuario, ':personas' => $_POST['personas'], ':dia' => $_POST['dia'], ':hora' => $_POST['hora']));
+$statement2 = $db->prepare('INSERT INTO reservas(id_usuario,responsable,personas,dia,hora) VALUES(:id_usuario,:responsable,:personas,:dia,:hora)');
+$statement2->execute(array(':id_usuario' => $id_usuario, ':responsable' => $_POST['responsable'], ':personas' => $_POST['personas'], ':dia' => $_POST['dia'], ':hora' => $_POST['hora']));
 
 $resp['redirect'] = "reservas.html";
 $resp['status'] = true;

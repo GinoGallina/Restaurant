@@ -38,6 +38,7 @@ function validar_camposForm(form){
 function validar_campos(form){
   const inputs = document.querySelectorAll(form+' input');
   let $form=d.querySelector(form);
+  console.log($form)
 
   console.log($form)
 
@@ -99,12 +100,14 @@ function validar_datos(datos){
   };
 
 
+
+
+
 //Lo primero q se ejectuta seria verificar si ya está logeado
 console.log()
 
 w.addEventListener('DOMContentLoaded',()=>{
   
-
 
   d.addEventListener('click',e=>{
     
@@ -281,13 +284,14 @@ w.addEventListener('DOMContentLoaded',()=>{
     location.href="../php/logout.php"
   }
 
-   //Crear reserva
-   if(e.target.matches('.btn-reserva')){
+   //Crear reserva modal
+   if((e.target.matches('.btn-reserva'))||(e.target.matches('#btn-editar'))){
+    console.log('e');
      d.querySelector('#nombre').value=d.querySelector('#btn-sesion').textContent;
     }
     
     
-    //Crear reserva
+  //Crear reserva
   if(e.target.matches('#btn-reg-res')){
     e.preventDefault();
     e.stopPropagation();
@@ -327,6 +331,35 @@ w.addEventListener('DOMContentLoaded',()=>{
 
      }
   }
+
+  //Editar reserva
+/*
+  if(e.target.matches('#btn-reg')){
+    e.preventDefault();
+    e.stopPropagation();
+    let $responsable=d.querySelector('#responsable');
+    let $personas=d.querySelector('#personas');
+    let $dia=d.querySelector('#dia');
+    let $hora=d.querySelector('#hora');
+
+
+    let formData=new FormData();
+    formData.append("id", $responsable.value);
+    formData.append("responsable", $responsable.value);
+    formData.append('personas', $personas.value);
+    formData.append('dia', $dia.value);
+    formData.append('hora', $hora.value)
+    if(validar_campos('.modal-body')){
+      if(e.target.classList.contains('editar')){
+        editar(formData);
+      }
+      if(e.target.classList.contains('borrar')){
+        borrar(formData);
+      }
+    }
+  }*/
+
+
 
 
   

@@ -12,7 +12,7 @@ body{
   background-image: url(https://static.vecteezy.com/system/resources/previews/007/078/789/non_2x/fast-food-set-icons-fastfood-background-doodle-fast-food-icons-seamless-pattern-with-food-icons-food-icons-on-white-background-hand-drown-pattern-with-fast-food-icons-free-vector.jpg);
 }
 
-.main-login{
+.main-login,.main-reservas{
   height: 84vh;
 }
 
@@ -29,4 +29,9 @@ a{
 .msj-error{
   color: red;
   font-size: 19px;
+}
+
+.btn-ver-reservas,.btn-reserva{
+  height: 100px;
+  width: 300px;
 }
