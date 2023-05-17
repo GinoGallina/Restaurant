@@ -1,0 +1,51 @@
+{
+  "personas": [
+    {
+      "id": 1,
+      "usuario": "GinoGallina",
+      "email": "ginogallina2002@gmail.com",
+      "password": "Gg174881"
+    },
+    {
+      "id": 2,
+      "usuario": "admin",
+      "email": "admin@gmail.com",
+      "password": "admin"
+    },
+    {
+      "usuario": "a",
+      "password": "a",
+      "id": 3
+    },
+    {
+      "usuario": "z",
+      "password": "z",
+      "id": 4
+    },
+    {
+      "usuario": "z",
+      "password": "z",
+      "id": 5
+    },
+    {
+      "usuario": "x",
+      "password": "x",
+      "id": 6
+    },
+    {
+      "usuario": "c",
+      "password": "c",
+      "id": 7
+    },
+    {
+      "usuario": "v",
+      "password": "v",
+      "id": 8
+    },
+    {
+      "usuario": "b",
+      "password": "b",
+      "id": 9
+    }
+  ]
+}

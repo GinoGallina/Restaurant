@@ -1,0 +1,32 @@
+*{
+  margin: 0;
+  padding: 0;
+}
+
+:root{
+  --color_fondo:rgb(41, 30, 52);
+}
+
+body{
+  /*background-color: var(--color_fondo);*/
+  background-image: url(https://static.vecteezy.com/system/resources/previews/007/078/789/non_2x/fast-food-set-icons-fastfood-background-doodle-fast-food-icons-seamless-pattern-with-food-icons-food-icons-on-white-background-hand-drown-pattern-with-fast-food-icons-free-vector.jpg);
+}
+
+.main-login{
+  height: 84vh;
+}
+
+.logo{
+  height: 48px;
+  width: auto;
+}
+
+a{
+  text-decoration: none;
+}
+
+
+.msj-error{
+  color: red;
+  font-size: 19px;
+}
