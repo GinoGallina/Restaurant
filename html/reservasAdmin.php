@@ -17,6 +17,9 @@
   if (empty($_SESSION['user_id'])) {
     header('location: ../html/index.php');
   }
+  if ($_SESSION['user_nombre'] != 'admin') {
+    header('location: ../html/reservas.php');
+  }
   ?>
 
   <header class="container-fluid p-0 mb-5">
@@ -44,11 +47,9 @@
                               <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                                 Opciones Admin
                               </a>
-                              <ul class="dropdown-menu bg-light">
-                                <li><a class="dropdown-item" href="sitios.html#ultimosProyectos">Clientes</a></li>
-                                <li><a class="dropdown-item" href="sitios.html#single-page">Sitio single-page</a></li>
-                                <li><a class="dropdown-item" href="sitios.html#multi-page">Sitio multi-page</a></li>
-                              </ul>
+                              <ul class="dropdown-menu bg-dark">
+                                <li><a class="dropdown-item" href="clientes.php">Clientes</a></li>
+                                </ul>
                             </li>';
             }
             ?>
@@ -112,7 +113,7 @@
               </div>
               <div class="modal-footer d-flex justify-content-center">
                 <button id="" class="btn btn-danger close" data-bs-dismiss="modal">Cancelar</button>
-                <button id="btn-reg" class="btn btn-success">Registrar</button>
+                <button id="btn-reg-res" class="btn btn-success">Registrar</button>
               </div>
             </div>
           </div>
@@ -122,6 +123,8 @@
         <table id="reservas" class="table table-dark table-striped mt-4">
           <thead>
             <th class="text-center">Id</th>
+            <th class="text-center">ID Cliente</th>
+            <th class="text-center">Cliente</th>
             <th class="text-center">Responsable</th>
             <th class="text-center">Personas</th>
             <th class="text-center">Dia</th>
@@ -131,6 +134,9 @@
           <tbody id="t-body">
           </tbody>
         </table>
+      </div>
+      <div class=" text-end">
+        <a href="" id="btn-crear-res" class="btn btn-dark btn-rounded mb-4 mt-2 border fs-3 " data-bs-toggle="modal" data-bs-target="#modalReserva">Crear Reserva</a>
       </div>
 
 
@@ -144,8 +150,8 @@
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
   <script src="https://kit.fontawesome.com/75833ea205.js" crossorigin="anonymous"></script>
-  <script src="../js/reservas.js"></script>
   <script src="../js/main.js"></script>
+  <script src="../js/reservasAdmin.js"></script>
 </body>
 
 </html>

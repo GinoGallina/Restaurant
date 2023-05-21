@@ -35,6 +35,20 @@ function validar_camposForm(form){
   }
 }
 
+function limparValidaciones(){
+  const inputs = document.querySelectorAll('#form-registrar input');
+  let $form=d.querySelector('#form-registrar');
+    inputs.forEach(input => {
+    if(input.classList.contains('border-danger')){
+        input.classList.remove('border','border-3','border-danger');
+    }
+    });
+    console.log(d.querySelector('.msj-error'))
+    if($form.firstChild.isEqualNode(d.querySelector('.msj-error'))){
+      d.querySelector('.msj-error').remove();
+    }
+}
+
 function validar_campos(form){
   const inputs = document.querySelectorAll(form+' input');
   let $form=d.querySelector(form);
@@ -243,6 +257,7 @@ w.addEventListener('DOMContentLoaded',()=>{
   if(e.target.matches('.btn-registrar')){
     e.preventDefault();
     e.stopPropagation();
+    limparValidaciones();
     let form=d.getElementById('#form-registrar');
     let nombre=d.getElementById('nombre');
     let email=d.getElementById('email');
@@ -265,8 +280,39 @@ w.addEventListener('DOMContentLoaded',()=>{
           if(json['status']){
             location.href="../php/secure.php";
           }else{
-
+          let $email=d.querySelector('#email');
+          let $nombre=d.querySelector('#nombre');
+          if(json['msg']=='Email invalido'){
+            if(!$email.classList.contains('border-danger')){
+              $email.classList.add('border','border-3','border-danger');
+            }
+              let $mensaje=d.createElement('div');
+              $mensaje.innerHTML='Email invalido';
+              $mensaje.classList.add('msj-error','text-center','pb-1');
+              let $form=d.querySelector('#form-registrar')
+              $form.insertBefore($mensaje,$form.firstChild);
+          }else if(json['msg']=='Usuario ya registrado'){
+            if(!$nombre.classList.contains('border-danger')){
+              $nombre.classList.add('border','border-3','border-danger');
+            }
+              let $mensaje=d.createElement('div');
+              $mensaje.innerHTML='Usuario ya registardo';
+              $mensaje.classList.add('msj-error','text-center','pb-1');
+              let $form=d.querySelector('#form-registrar')
+              $form.insertBefore($mensaje,$form.firstChild);
+          }else if(json['msg']=='Email ya registrado'){
+            console.log('e')
+              if(!$email.classList.contains('border-danger')){
+              $email.classList.add('border','border-3','border-danger');
+            }
+              let $mensaje=d.createElement('div');
+              $mensaje.innerHTML='Email ya registardo';
+              $mensaje.classList.add('msj-error','text-center','pb-1');
+              let $form=d.querySelector('#form-registrar')
+              $form.insertBefore($mensaje,$form.firstChild);
           }
+        
+        }
           }) 
          .catch(err => {
           console.log('ERROR')

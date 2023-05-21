@@ -17,6 +17,9 @@
   if (empty($_SESSION['user_id'])) {
     header('location: ../html/index.php');
   }
+  if ($_SESSION['user_nombre']!='admin') {
+    header('location: ../html/reservas.php');
+  }
   ?>
 
   <header class="container-fluid p-0 mb-5">
@@ -30,30 +33,25 @@
           <ul class="navbar-nav ms-auto mb-2 mb-lg-0 d-flex">
             <div class="">
               <li class="nav-item dropdown ms-auto">
-                <a id="btn-sesion" class="nav-link dropdown-toggle " href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"><?php
-                                                                                                                                            echo $_SESSION['user_nombre']; ?>
+                <a id="btn-sesion" class="nav-link dropdown-toggle " href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"><?php echo $_SESSION['user_nombre']; ?>
                 </a>
                 <ul class="dropdown-menu">
-                  <li class="text-center"><a href="" id="btn-logout">Log out</a></li>
+                  <li class="text-center"><a href="" id="btn-logout" class="dropdown-item">Log out</a></li>
                 </ul>
               </li>
             </div>
             <?php
             if ($_SESSION['user_nombre'] == 'admin') {
               echo '        <li class="nav-item dropdown">
-                              <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                              <a class="nav-link active dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                                 Opciones Admin
                               </a>
-                              <ul class="dropdown-menu bg-light">
-                                <li><a class="dropdown-item" href="sitios.html#ultimosProyectos">Clientes</a></li>
-                                <li><a class="dropdown-item" href="sitios.html#single-page">Sitio single-page</a></li>
-                                <li><a class="dropdown-item" href="sitios.html#multi-page">Sitio multi-page</a></li>
+                              <ul class="dropdown-menu ">
+                                <li><a class="dropdown-item" href="#">Clientes</a></li>
                               </ul>
                             </li>';
             }
             ?>
-
-
             <li class="nav-item">
               <a class="nav-link " aria-current="page" href="carta.php">Carta</a>
             </li>
@@ -65,14 +63,11 @@
       </div>
     </nav>
   </header>
-
-
-
-  <main class="container-lg main-ver-res">
+  <main class="container-lg main-reservas">
     <section class="row">
       <div class="col-12">
         <!-- MODAL -->
-        <div class="modal fade" id="modalReserva" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal fade" id="modalCliente" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
           <div class="modal-dialog" role="document">
             <div class="modal-content">
               <div class="modal-header text-center">
@@ -82,58 +77,53 @@
                 </button>
               </div>
               <div class="modal-body mx-3">
-
-                <div class="md-form mb-5">
-                  <label data-error="wrong" data-success="right" for="defaultForm-email">Usuario</label>
-                  <input type="text" id="nombre" name="nombre" class="form-control validate no-desabilitar" disabled>
-                </div>
                 <div class="md-form mb-5">
                   <label data-error="wrong" data-success="right" for="defaultForm-email">ID</label>
-                  <input type="text" id="id_res" name="id_res" class="form-control validate no-desabilitar" disabled>
+                  <input type="text" id="id_cli" name="id_cli" class="form-control validate no-desabilitar" disabled>
                 </div>
                 <div class="md-form mb-5">
-                  <label data-error="wrong" data-success="right" for="defaultForm-email">Responsable</label>
-                  <input type="text" id="responsable" name="responsable" class="form-control validate" required>
+                  <label data-error="wrong" data-success="right" for="defaultForm-email">Nombre</label>
+                  <input type="text" id="nombre" name="nombre" class="form-control validate" required>
                 </div>
                 <div class="md-form mb-5">
-                  <label data-error="wrong" data-success="right" for="defaultForm-email">Cantidad personas</label>
-                  <input type="number" id="personas" name="personas" class="form-control validate" required>
+                  <label data-error="wrong" data-success="right" for="defaultForm-email">Email</label>
+                  <input type="email" id="email" name="email" class="form-control validate" required>
                 </div>
                 <div class="md-form mb-5">
-                  <label data-error="wrong" data-success="right" for="defaultForm-email">Dia</label>
-                  <input type="date" id="dia" name="dia" class="form-control validate" required>
-                </div>
-
-                <div class="md-form mb-4">
-                  <label data-error="wrong" data-success="right" for="defaultForm-pass">Hora</label>
-                  <input type="time" id="hora" name="hora" class="form-control validate required" min="09:00" max="22:00">
+                  <label data-error="wrong" data-success="right" for="defaultForm-email">Contraseña</label>
+                  <input type="password" id="password" name="password" class="form-control validate" required>
                 </div>
 
               </div>
               <div class="modal-footer d-flex justify-content-center">
                 <button id="" class="btn btn-danger close" data-bs-dismiss="modal">Cancelar</button>
-                <button id="btn-reg" class="btn btn-success">Registrar</button>
+                <button id="btn-reg-cli" class="btn btn-success">Registrar</button>
               </div>
             </div>
           </div>
         </div>
-        <!-- FIN MODAL -->
+        <!-- MODAL -->
 
-        <table id="reservas" class="table table-dark table-striped mt-4">
+        <table id="clientes" class="table table-dark table-striped mt-4">
           <thead>
             <th class="text-center">Id</th>
-            <th class="text-center">Responsable</th>
-            <th class="text-center">Personas</th>
-            <th class="text-center">Dia</th>
-            <th class="text-center">Hora</th>
+            <th class="text-center">Usuario</th>
+            <th class="text-center">Email</th>
+            <th class="text-center">Contraseña</th>
+            <th class="text-center">Fecha Creación</th>
             <th class="text-center">Acciones</th>
           </thead>
           <tbody id="t-body">
           </tbody>
         </table>
-      </div>
 
+        <div class=" text-end">
+          <a href="" id="btn-crear-cli" class="btn btn-dark btn-rounded mb-4 mt-2 border fs-3 " data-bs-toggle="modal" data-bs-target="#modalCliente">Crear Cliente</a>
+        </div>
 
+        <div class="col-12">
+
+        </div>
     </section>
   </main>
 
@@ -144,8 +134,12 @@
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
   <script src="https://kit.fontawesome.com/75833ea205.js" crossorigin="anonymous"></script>
-  <script src="../js/reservas.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <script src="sweetalert2.all.min.js"></script>
   <script src="../js/main.js"></script>
+  <script src="../js/clientes.js"></script>
+
+
 </body>
 
 </html>

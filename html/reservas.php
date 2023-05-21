@@ -15,14 +15,14 @@
   <?php
   session_start();
   if (empty($_SESSION['user_id'])) {
-    header('location: ../html/index.html');
+    header('location: ../html/index.php');
   }
   ?>
 
   <header class="container-fluid p-0 mb-5">
     <nav class="navbar navbar-expand-lg bg-dark fs-4" data-bs-theme="dark">
       <div class="container-fluid">
-        <a class="navbar-brand" href="index.html"><img src="https://www.sosfactory.com/wp-content/uploads/2016/12/icon-restaurant-bolat-min.png" class="logo" alt=""></a>
+        <a class="navbar-brand" href="index.php"><img src="https://www.sosfactory.com/wp-content/uploads/2016/12/icon-restaurant-bolat-min.png" class="logo" alt=""></a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
         </button>
@@ -30,29 +30,32 @@
           <ul class="navbar-nav ms-auto mb-2 mb-lg-0 d-flex">
             <div class="">
               <li class="nav-item dropdown ms-auto">
-                <a id="btn-sesion" class="nav-link dropdown-toggle " href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"><?php
-                                                                                                                                            echo $_SESSION['user_nombre']; ?>
+                <a id="btn-sesion" class="nav-link dropdown-toggle " href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"><?php                                                                                                                                  echo $_SESSION['user_nombre']; ?>
                 </a>
                 <ul class="dropdown-menu">
-                  <li class="text-center"><a href="" id="btn-logout">Log out</a></li>
+                  <li class="text-center"><a href="" id="btn-logout" class="dropdown-item">Log out</a></li>
                 </ul>
               </li>
             </div>
             <?php
-              if($_SESSION['user_nombre']=='admin'){
-                  echo '<li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="index.html">Clientes</a>
-                    </li>';
-              }
+            if ($_SESSION['user_nombre'] == 'admin') {
+              echo '        <li class="nav-item dropdown">
+                              <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                Opciones Admin
+                              </a>
+                              <ul class="dropdown-menu ">
+                                <li><a class="dropdown-item" href="clientes.php">Clientes</a></li>
+                                <li><a class="dropdown-item" href="sitios.html#single-page">Sitio single-page</a></li>
+                                <li><a class="dropdown-item" href="sitios.html#multi-page">Sitio multi-page</a></li>
+                              </ul>
+                            </li>';
+            }
             ?>
             <li class="nav-item">
-              <a class="nav-link active" aria-current="page" href="index.html">Inicio</a>
+              <a class="nav-link " aria-current="page" href="carta.php">Carta</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link active" aria-current="page" href="#">Carta</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="reservas.html">Reservas</a>
+              <a class="nav-link active" href="reservas.php">Reservas</a>
             </li>
           </ul>
         </div>
@@ -108,8 +111,16 @@
           <a href="" class="btn btn-dark btn-rounded mb-4 p-4 border fs-5 btn-reserva" data-bs-toggle="modal" data-bs-target="#modalCrearReserva">Realizar una reserva</a>
         </div>
         <div class="text-center">
-          <a href="misReservas.php" class="btn btn-dark btn-rounded mb-4 p-4 border fs-5 btn-ver-reservas" >Ver mis reservas</a>
+          <a href="misReservas.php" class="btn btn-dark btn-rounded mb-4 p-4 border fs-5 btn-ver-reservas">Ver mis reservas</a>
         </div>
+        <?php
+        if($_SESSION['user_nombre']=='admin'){
+          echo '<div class="text-center">
+          <a href="reservasAdmin.php" class="btn btn-dark btn-rounded mb-4 p-4 border fs-5 btn-ver-reservas">Ver todas las reservas</a>
+        </div>';
+        }
+
+        ?>
       </div>
 
 
@@ -120,7 +131,7 @@
   </main>
 
   <footer class="container-fluid p-0 text-center ">
-    <p class="text-white bg-dark p-2">©2023 Página realizada por Gino Gallina</p>
+    <p class="text-white bg-dark p-2 m-0">©2023 Página realizada por Gino Gallina</p>
   </footer>
 
 

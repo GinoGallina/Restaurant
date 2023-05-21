@@ -28,7 +28,7 @@ if (count($error) > 0) {
   exit;
 }
 
-$statement = $db->prepare("select * from usuarios where email = :email and nombre = :nombre");
+$statement = $db->prepare("select * from usuarios where email = :email and nombre = :nombre and borrado=0");
 $statement->execute(array(':email' => $_POST['email'],':nombre' => $_POST['nombre']));
 $row = $statement->fetchAll(PDO::FETCH_ASSOC);
 if (count($row) > 0) {

@@ -38,7 +38,7 @@ $row2 = $statement2->fetchAll(PDO::FETCH_ASSOC);
 
 if (count($row) > 0) {
   $error[] = "Email ya registrado";
-  $resp['msg1'] = $error;
+  $resp['msg'] = $error;
   $resp['status'] = false;
   echo json_encode($resp);
   exit;
@@ -46,7 +46,7 @@ if (count($row) > 0) {
 
 if (count($row2) > 0) {
   $error[] = "Usuario ya registrado";
-  $resp['msg2'] = $error;
+  $resp['msg'] = $error;
   $resp['status2'] = false;
   echo json_encode($resp);
   exit;

@@ -38,6 +38,10 @@ function habilitarCampos(){
 
 }
 
+function traerClientes(){
+
+}
+
 function deshabilitarCampos(){
   let $inputs=doc.querySelectorAll('.modal input');
   $inputs.forEach(inp=>{
@@ -47,7 +51,34 @@ function deshabilitarCampos(){
   })
 }
 
+function limparCampos(){
+  const inputs = document.querySelectorAll('.modal-body input');
+  let $form=d.querySelector('.modal-body');
+    inputs.forEach(input => {
+    input.value=""
+    if(input.classList.contains('border-danger')){
+        input.classList.remove('border','border-3','border-danger');
+    }
+    });
+    console.log(doc.querySelector('.msj-error'))
+    if($form.nextElementSibling.isEqualNode(doc.querySelector('.msj-error'))){
+      doc.querySelector('.msj-error').remove();
+    }
+}
 
+function limparValidaciones(){
+  const inputs = document.querySelectorAll('.modal-body input');
+  let $form=d.querySelector('.modal-body');
+    inputs.forEach(input => {
+    if(input.classList.contains('border-danger')){
+        input.classList.remove('border','border-3','border-danger');
+    }
+    });
+    console.log(doc.querySelector('.msj-error'))
+    if($form.nextElementSibling.isEqualNode(doc.querySelector('.msj-error'))){
+      doc.querySelector('.msj-error').remove();
+    }
+}
 
 function validar_campos(form){
   const inputs = document.querySelectorAll(form+' input');
@@ -104,6 +135,50 @@ function editar(data){
           );
 }
 
+function crear(data){
+    fetch('../php/createReserva.php', {
+     method: "POST",
+     body: data,
+     })
+       .then(response => response.json()) 
+       .then(json => {
+        console.log(json);
+        if(json['status']){
+          alert('ser registró')
+          location.reload();
+        }else{
+          let $email=doc.querySelector('#email');
+          let $nombre=doc.querySelector('#nombre');
+          if(json['msg']=='Enter Valid Email address'){
+            if(!$email.classList.contains('border-danger')){
+              $email.classList.add('border','border-3','border-danger');
+            }
+              let $mensaje=d.createElement('div');
+              $mensaje.innerHTML='Email invalido';
+              $mensaje.classList.add('msj-error','text-center','pb-1');
+              doc.querySelector('.modal-body').insertAdjacentElement('afterend',$mensaje)
+          }else if(json['msg']=='Ya hay un usuario con en ese nombre o mail'){
+            if(!$email.classList.contains('border-danger')){
+              $email.classList.add('border','border-3','border-danger');
+            }
+            if(!$nombre.classList.contains('border-danger')){
+              $nombre.classList.add('border','border-3','border-danger');
+            }
+              let $mensaje=d.createElement('div');
+              $mensaje.innerHTML='Ya hay un usuario con ese Email o Nombre';
+              $mensaje.classList.add('msj-error','text-center','pb-1');
+              doc.querySelector('.modal-body').insertAdjacentElement('afterend',$mensaje) 
+          }
+        
+        }
+        }) 
+       .catch(err => {
+        console.log('ERROR')
+        console.log(err)}
+        );
+}
+
+
 function borrar(id){
 
       fetch('../php/borrarReserva.php?'+ new URLSearchParams({
@@ -131,23 +206,28 @@ function borrar(id){
 
 win.addEventListener('DOMContentLoaded',()=>{
 
+  traerClientes()
   let $t_body= doc.querySelector('#t-body')
-  fetch('../php/verReservasClientes.php')
+  fetch('../php/verReservas.php')
       .then(response => response.json())
-      .then(data => {     
+      .then(data => {
+        
+        
 
         let contenido="";
         data.forEach(d=>{
           contenido += "<tr>";
       	  contenido += "<td class='text-center'>" + d.id + "</td>";
+      	  contenido += "<td class='text-center'>" + d.id_usuario + "</td>";
+      	  contenido += "<td class='text-center'>" + d.id_usuario + "</td>";
       	  contenido += "<td class='text-center'>" + d.responsable + "</td>";
           contenido += "<td class='text-center'>" + d.personas + "</td>";
           contenido += "<td class='text-center'>" + d.dia + "</td>";
           contenido += "<td class='text-center'>" + d.hora + "</td>";
           contenido += "<td class='text-center'>" 
           contenido+= '<form action="" class="borrar d-flex justify-content-around" method="">'
-          contenido+='<a id="btn-editar" href="" class="btn btn-info" data-bs-toggle="modal" data-bs-target="#modalReserva" data-res='+d.id+'>Editar</a>'
-          contenido+='<a id="btn-borrar" href="" class=" btn btn-danger boton-borrar" data-bs-toggle="modal" data-bs-target="#modalReserva" data-res='+d.id+'>Borrar</a></form>'       
+          contenido+='<a id="btn-editar-res" href="" class="btn btn-info" data-bs-toggle="modal" data-bs-target="#modalReserva" data-res='+d.id+'>Editar</a>'
+          contenido+='<a id="btn-borrar-res" href="" class=" btn btn-danger boton-borrar" data-bs-toggle="modal" data-bs-target="#modalReserva" data-res='+d.id+'>Borrar</a></form>'       
           contenido +="</td>"
           contenido += "</tr>";
         })
@@ -160,21 +240,37 @@ win.addEventListener('DOMContentLoaded',()=>{
         console.log(err)});
       
 
-      doc.addEventListener('click',e=>{
+    doc.addEventListener('click',e=>{
         let $tituloModal=doc.querySelector('#modal-label');
-        let $btn_reg=doc.getElementById('btn-reg');
-        if(e.target.matches('#btn-editar')){
+        let $btn_reg=doc.getElementById('btn-reg-res');
+
+        if(e.target.matches('#btn-crear-res')){
+          limparCampos();
+          $tituloModal.innerHTML="Crear Reserva";
+          habilitarCampos();
+          $btn_reg.classList.add('crear');
+          if($btn_reg.classList.contains('borrar')){
+            $btn_reg.classList.remove('borrar');
+          }
+          if($btn_reg.classList.contains('editar')){
+            $btn_reg.classList.remove('editar');
+          }
+        }
+        
+        if(e.target.matches('#btn-editar-res')){
+          limparCampos();
           $tituloModal.innerHTML="Editar Reserva";
           habilitarCampos();
           let $id_res=e.target.dataset.res;
           completarCampos($id_res);
           $btn_reg.classList.add('editar');
           if($btn_reg.classList.contains('borrar')){
-            $btn_reg.classList.remove('borrar');
+            $btn_reg.classList.remove('crear');
           }
         }
 
-        if(e.target.matches('#btn-borrar')){
+        if(e.target.matches('#btn-borrar-res')){
+          limparCampos();
           $tituloModal.innerHTML="Borrar Reserva";
           deshabilitarCampos();
           completarCampos(e.target.dataset.res);
@@ -182,12 +278,15 @@ win.addEventListener('DOMContentLoaded',()=>{
           if($btn_reg.classList.contains('editar')){
             $btn_reg.classList.remove('editar');
           }
+          if($btn_reg.classList.contains('crear')){
+            $btn_reg.classList.remove('crear');
+          }
         }
 
-        if(e.target.matches('#btn-reg')){
+        if(e.target.matches('#btn-reg-res')){
             e.preventDefault();
             e.stopPropagation();
-            
+            limparValidaciones();
             if(validar_campos('.modal-body')){
               let $id_res=d.querySelector('#id_res');
               let $responsable=d.querySelector('#responsable');
@@ -203,12 +302,16 @@ win.addEventListener('DOMContentLoaded',()=>{
               formData.append('dia', $dia.value);
               formData.append('hora', $hora.value);
 
-
-
+              
+              
+              
               if(e.target.classList.contains('editar')){
+                formData.append("id", $id_res.value);
                 editar(formData);
               }else if(e.target.classList.contains('borrar')){
                 borrar($id_res.value);
+              }else if(e.target.classList.contains('crear')){
+                crear(formData);
               }
           }
 
