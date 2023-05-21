@@ -92,8 +92,13 @@ function editar(data){
          .then(json => {
           console.log(json);
           if(json['status']){
-            alert('se actualizo')
-            location.reload();
+            Swal.fire(
+            'Reserva Editada!',
+            '',
+            'success'
+                ).then(()=>
+              location.reload()
+            );
           }else{
 
           }
@@ -115,8 +120,13 @@ function borrar(id){
          .then(json => {
           console.log(json);
           if(json['status']){
-            alert('Se borro');
-            location.reload();
+            Swal.fire(
+            'Reserva Borrada!',
+            '',
+            'success'
+                ).then(()=>
+              location.reload()
+            );
             
           }else{
 
@@ -130,6 +140,7 @@ function borrar(id){
 
 
 win.addEventListener('DOMContentLoaded',()=>{
+
 
   let $t_body= doc.querySelector('#t-body')
   fetch('../php/verReservasClientes.php')

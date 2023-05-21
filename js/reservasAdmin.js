@@ -123,8 +123,13 @@ function editar(data){
          .then(json => {
           console.log(json);
           if(json['status']){
-            alert('se actualizo')
-            location.reload();
+            Swal.fire(
+            'Reserva Ediado!',
+            '',
+            'success'
+                ).then(()=>
+              location.reload()
+            );
           }else{
 
           }
@@ -144,8 +149,13 @@ function crear(data){
        .then(json => {
         console.log(json);
         if(json['status']){
-          alert('ser registró')
-          location.reload();
+            Swal.fire(
+            'Reserva Regsitrada!',
+            '',
+            'success'
+                ).then(()=>
+              location.reload()
+            );
         }else{
           let $email=doc.querySelector('#email');
           let $nombre=doc.querySelector('#nombre');
@@ -190,9 +200,13 @@ function borrar(id){
          .then(json => {
           console.log(json);
           if(json['status']){
-            alert('Se borro');
-            location.reload();
-            
+            Swal.fire(
+            'Reserva Borrada!',
+            '',
+            'success'
+                ).then(()=>
+              location.reload()
+            );
           }else{
 
           }
@@ -206,6 +220,12 @@ function borrar(id){
 
 win.addEventListener('DOMContentLoaded',()=>{
 
+  let $dia= d.querySelector('#dia');
+  if($dia!=null){
+    let today = new Date().toISOString().slice(0, 10)
+    $dia.setAttribute("min",today)
+  }
+  
   traerClientes()
   let $t_body= doc.querySelector('#t-body')
   fetch('../php/verReservas.php')

@@ -34,6 +34,19 @@ function validar_camposForm(form){
     return true;
   }
 }
+function limparValidacionesForm(){
+  const inputs = document.querySelectorAll('.modal-body input');
+  let $form=d.querySelector('.modal-body');
+    inputs.forEach(input => {
+    if(input.classList.contains('border-danger')){
+        input.classList.remove('border','border-3','border-danger');
+    }
+    });
+    console.log(d.querySelector('.msj-error'))
+    if($form.nextElementSibling.isEqualNode(d.querySelector('.msj-error'))){
+      d.querySelector('.msj-error').remove();
+    }
+}
 
 function limparValidaciones(){
   const inputs = document.querySelectorAll('#form-registrar input');
@@ -122,6 +135,11 @@ console.log()
 
 w.addEventListener('DOMContentLoaded',()=>{
   
+  let $dia= d.querySelector('#dia');
+  if($dia!=null){
+    let today = new Date().toISOString().slice(0, 10)
+    $dia.setAttribute("min",today)
+  }
 
   d.addEventListener('click',e=>{
     
@@ -341,6 +359,7 @@ w.addEventListener('DOMContentLoaded',()=>{
   if(e.target.matches('#btn-reg-res')){
     e.preventDefault();
     e.stopPropagation();
+    limparValidacionesForm();
     let $responsable=d.querySelector('#responsable');
     let $personas=d.querySelector('#personas');
     let $dia=d.querySelector('#dia');
@@ -363,11 +382,21 @@ w.addEventListener('DOMContentLoaded',()=>{
           console.log(json);
           if(json['status']){
             console.log('se registró')
-            alert('ser registró')
-            location.reload();
+            Swal.fire(
+            'Reserva Registrada!',
+            '',
+            'success'
+                ).then(()=>
+              location.reload()
+            );
             //location.href="../php/secure.php";
           }else{
-
+            if(json['msg']=="Ya hay una reserva en ese dia a esa hora"){
+              let $mensaje=d.createElement('div');
+              $mensaje.innerHTML='Ya hay una reserva en ese dia a esa hora';
+              $mensaje.classList.add('msj-error','text-center','pb-1');
+              d.querySelector('.modal-body').insertAdjacentElement('afterend',$mensaje)
+            }
           }
           }) 
          .catch(err => {

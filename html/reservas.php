@@ -30,7 +30,7 @@
           <ul class="navbar-nav ms-auto mb-2 mb-lg-0 d-flex">
             <div class="">
               <li class="nav-item dropdown ms-auto">
-                <a id="btn-sesion" class="nav-link dropdown-toggle " href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"><?php                                                                                                                                  echo $_SESSION['user_nombre']; ?>
+                <a id="btn-sesion" class="nav-link dropdown-toggle " href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"><?php echo $_SESSION['user_nombre']; ?>
                 </a>
                 <ul class="dropdown-menu">
                   <li class="text-center"><a href="" id="btn-logout" class="dropdown-item">Log out</a></li>
@@ -45,8 +45,6 @@
                               </a>
                               <ul class="dropdown-menu ">
                                 <li><a class="dropdown-item" href="clientes.php">Clientes</a></li>
-                                <li><a class="dropdown-item" href="sitios.html#single-page">Sitio single-page</a></li>
-                                <li><a class="dropdown-item" href="sitios.html#multi-page">Sitio multi-page</a></li>
                               </ul>
                             </li>';
             }
@@ -86,7 +84,7 @@
                 </div>
                 <div class="md-form mb-5">
                   <label data-error="wrong" data-success="right" for="defaultForm-email">Cantidad personas</label>
-                  <input type="number" id="personas" name="personas" class="form-control validate" required>
+                  <input type="number" id="personas" min=0 name="personas" class="form-control validate" required>
                 </div>
                 <div class="md-form mb-5">
                   <label data-error="wrong" data-success="right" for="defaultForm-email">Dia</label>
@@ -95,7 +93,7 @@
 
                 <div class="md-form mb-4">
                   <label data-error="wrong" data-success="right" for="defaultForm-pass">Hora</label>
-                  <input type="time" id="hora" name="hora" class="form-control validate required" min="09:00" max="22:00">
+                  <input type="time" id="hora" name="hora" min="09:00" max="22:00" class="form-control validate" required>
                 </div>
 
               </div>
@@ -114,7 +112,7 @@
           <a href="misReservas.php" class="btn btn-dark btn-rounded mb-4 p-4 border fs-5 btn-ver-reservas">Ver mis reservas</a>
         </div>
         <?php
-        if($_SESSION['user_nombre']=='admin'){
+        if ($_SESSION['user_nombre'] == 'admin') {
           echo '<div class="text-center">
           <a href="reservasAdmin.php" class="btn btn-dark btn-rounded mb-4 p-4 border fs-5 btn-ver-reservas">Ver todas las reservas</a>
         </div>';
@@ -138,6 +136,8 @@
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
   <script src="https://kit.fontawesome.com/75833ea205.js" crossorigin="anonymous"></script>
   <script src="../js/main.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <script src="sweetalert2.all.min.js"></script>
 </body>
 
 </html>

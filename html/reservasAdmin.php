@@ -107,7 +107,7 @@
 
                 <div class="md-form mb-4">
                   <label data-error="wrong" data-success="right" for="defaultForm-pass">Hora</label>
-                  <input type="time" id="hora" name="hora" class="form-control validate required" min="09:00" max="22:00">
+                  <input type="time" id="hora" name="hora" class="form-control validate " required min="09:00" max="22:00">
                 </div>
 
               </div>
@@ -152,6 +152,8 @@
   <script src="https://kit.fontawesome.com/75833ea205.js" crossorigin="anonymous"></script>
   <script src="../js/main.js"></script>
   <script src="../js/reservasAdmin.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <script src="sweetalert2.all.min.js"></script>
 </body>
 
 </html>
